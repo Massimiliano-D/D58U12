@@ -2,6 +2,7 @@ package entities;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Set;
 
 @Entity
 @Table(name = "eventi")
@@ -16,10 +17,14 @@ public class Evento {
     private TipoEvento tipo_evento;
     private int numero_max_partc;
 
+    @OneToMany(mappedBy = "evento", cascade = CascadeType.REMOVE)
+    private Set<Partecipazione> setPartecipanti;
+    @ManyToOne
+    private Location location;
+
     public Evento() {
 
     }
-
 
     public Evento(String titolo, LocalDate data_evento, String descrizione, TipoEvento tipo_evento, int numero_max_partc) {
 
@@ -28,6 +33,22 @@ public class Evento {
         this.descrizione = descrizione;
         this.tipo_evento = tipo_evento;
         this.numero_max_partc = numero_max_partc;
+    }
+
+    public Set<Partecipazione> getSetPartecipanti() {
+        return setPartecipanti;
+    }
+
+    public void setSetPartecipanti(Set<Partecipazione> setPartecipanti) {
+        this.setPartecipanti = setPartecipanti;
+    }
+
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
     }
 
     public long getId() {
@@ -73,4 +94,5 @@ public class Evento {
     public void setNumero_max_partc(int numero_max_partc) {
         this.numero_max_partc = numero_max_partc;
     }
+
 }
